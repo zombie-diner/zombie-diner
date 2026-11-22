@@ -22,7 +22,7 @@ public class DebugZombieKiller : MonoBehaviour
         ZombieAI nearest = null;
         float best = float.MaxValue;
 
-        foreach (ZombieAI z in FindObjectsByType<ZombieAI>(FindObjectsSortMode.None))
+        foreach (ZombieAI z in FindObjectsByType<ZombieAI>())
         {
             float d = Vector3.Distance(player.transform.position, z.transform.position);
             if (d < best) { best = d; nearest = z; }
@@ -37,7 +37,7 @@ public class DebugZombieKiller : MonoBehaviour
 
     void KillAll()
     {
-        foreach (ZombieAI z in FindObjectsByType<ZombieAI>(FindObjectsSortMode.None))
+        foreach (ZombieAI z in FindObjectsByType<ZombieAI>())
             z.TakeDamage(999999f);
     }
 }

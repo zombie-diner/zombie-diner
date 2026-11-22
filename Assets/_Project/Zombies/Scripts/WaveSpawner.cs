@@ -9,6 +9,7 @@ public class WaveSpawner : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] ZombieAI normalZombiePrefab;
     [SerializeField] ZombieAI explodingZombiePrefab;
+    [SerializeField] ZombieAI foodZombiePrefab;
 
     [Header("Spawn Points")]
     [SerializeField] Transform[] spawnPoints;
@@ -20,6 +21,10 @@ public class WaveSpawner : MonoBehaviour
     [Header("Exploding Zombies")]
     [SerializeField] int explodingStartWave = 6;
     [SerializeField] int explodingPerWave = 1;
+
+    [Header("Food Zombies")]
+    [SerializeField] int foodZomStartWave = 4;
+    [SerializeField] int foodZomPerWave = 1;
 
     [Header("Pacing")]
     [SerializeField] float spawnInterval = 1.5f;
@@ -60,7 +65,7 @@ public class WaveSpawner : MonoBehaviour
         WaveActive = true;
         BuildSpawnQueue(wave);
 
-        Debug.Log($"Wave {wave}: {NormalCount(wave)} normal, {ExplodingCount(wave)} exploding");
+        Debug.Log($"Wave {wave}: {NormalCount(wave)} normal, {ExplodingCount(wave)} exploding, {FoodZomCount(wave)} food");
         OnWaveStarted?.Invoke(wave);
         spawnRoutine = StartCoroutine(SpawnLoop());
     }
@@ -79,11 +84,15 @@ public class WaveSpawner : MonoBehaviour
     int ExplodingCount(int wave) =>
         wave < explodingStartWave ? 0 : explodingPerWave * (wave - explodingStartWave + 1);
 
+    int FoodZomCount(int wave) =>
+        wave < foodZomStartWave ? 0 : foodZomPerWave * (wave - foodZomStartWave + 1);
+
     void BuildSpawnQueue(int wave)
     {
         spawnQueue.Clear();
         for (int i = 0; i < NormalCount(wave); i++) spawnQueue.Add(normalZombiePrefab);
         for (int i = 0; i < ExplodingCount(wave); i++) spawnQueue.Add(explodingZombiePrefab);
+        for (int i = 0; i < FoodZomCount(wave); i++) spawnQueue.Add(foodZombiePrefab);
 
         // Shuffle so exploders are mixed in
         for (int i = spawnQueue.Count - 1; i > 0; i--)

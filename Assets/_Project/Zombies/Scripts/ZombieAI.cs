@@ -9,7 +9,7 @@ public class ZombieAI : MonoBehaviour
     [SerializeField] float repathInterval = 0.25f; // how often to re-check target & path
 
     [Header("Attack")]
-    [SerializeField] float attackRange = 1.5f;
+    [SerializeField] protected float attackRange = 1.5f; //new protected
     [SerializeField] float attackCooldown = 1.0f;
     [SerializeField] int attackDamage = 10;
 
