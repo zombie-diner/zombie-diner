@@ -67,6 +67,7 @@ public class WaveSpawner : MonoBehaviour
 
         Debug.Log($"Wave {wave}: {NormalCount(wave)} normal, {ExplodingCount(wave)} exploding, {FoodZomCount(wave)} food");
         OnWaveStarted?.Invoke(wave);
+        if (UIManager.Instance != null) UIManager.Instance.UpdateWave($"Wave {wave}");
         spawnRoutine = StartCoroutine(SpawnLoop());
     }
 
