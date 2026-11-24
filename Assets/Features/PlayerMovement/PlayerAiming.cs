@@ -7,6 +7,7 @@ public class PlayerAiming : MonoBehaviour
     private Camera aimCamera;
     [SerializeField] private InputActionReference aimActionReference;
     [SerializeField] private InputActionReference cursorPositionActionReference;
+    [SerializeField] private Transform aimPivot;
 
     private PlayerMovement movement;
     private Rigidbody body;
@@ -55,24 +56,23 @@ public class PlayerAiming : MonoBehaviour
             return;
         }
 
-        // while aiming, calculate the direction that the player should be
-        // facing so we can write the location to their avatar in a FixedUpdate
-        Plane plane = new(Vector3.up, body.position);
+        // while aiming, point toward the mouse cursor
+        Plane plane = new(Vector3.up, transform.position);
         Ray ray = aimCamera.ScreenPointToRay(cursorPositionActionReference.action.ReadValue<Vector2>());
         if (plane.Raycast(ray, out float distance))
         {
-            Vector3 direction = ray.GetPoint(distance) - body.position;
+            Vector3 direction = ray.GetPoint(distance) - transform.position;
             direction.y = 0f;
-            if (SignificantChange(direction.sqrMagnitude))
+            if (direction.sqrMagnitude > 0.25f) // ignore cursor within 0.5 units
             {
                 AimDirection = direction.normalized;
             }
         }
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        // physically turn player body in the direction of the aim direction
-        body.MoveRotation(Quaternion.LookRotation(AimDirection, Vector3.up));
+        Quaternion goal = Quaternion.LookRotation(AimDirection, Vector3.up);
+        aimPivot.rotation = Quaternion.Slerp(aimPivot.rotation, goal, 1f - Mathf.Exp(-25f * Time.deltaTime));
     }
 }
