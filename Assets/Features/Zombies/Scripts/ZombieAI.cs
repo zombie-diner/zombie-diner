@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class ZombieAI : MonoBehaviour
+public class ZombieAI : MonoBehaviour, IDamageable
 {
+
     [Header("Movement")]
     [SerializeField] protected float moveSpeed = 2.5f; //new protected so subclass can see
     [SerializeField] float repathInterval = 0.25f; // how often to re-check target & path
@@ -29,6 +30,9 @@ public class ZombieAI : MonoBehaviour
     //new
     protected float health;
     protected bool isDead;
+
+    public bool IsDead => isDead;
+    public void TakeDamage(float amount, GameObject source) => TakeDamage(amount);
 
     protected virtual void Awake() //new protected virtual
     {
