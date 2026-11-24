@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "zombie-diner.slnx"
+    "dotnet.defaultSolution": "Zombie Diner.slnx"
 }

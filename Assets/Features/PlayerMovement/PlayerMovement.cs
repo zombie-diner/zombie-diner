@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
         //accelerate or deaccelerate from current velocity to desired velocity
         currentVelocity = Vector3.MoveTowards(currentVelocity, desiredVelocity, movAccel * Time.fixedDeltaTime);
-        playerRB.MovePosition(playerRB.position + currentVelocity * Time.fixedDeltaTime);
+        playerRB.linearVelocity = new Vector3(currentVelocity.x, playerRB.linearVelocity.y, currentVelocity.z);
     }
 
     void OnEnable()
