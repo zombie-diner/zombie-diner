@@ -125,6 +125,8 @@ public class ZombieAI : MonoBehaviour
     protected virtual void DamageTarget(Transform victim, int amount)
     {
         // TODO: replace with shared IDamageable/Health once weapons person sets it up
+        if (victim.TryGetComponent<IDamageable>(out var damageable))
+            damageable.TakeDamage(amount, gameObject);
         Debug.Log($"{name} attacks {victim.name} for {amount} damage");
     }
 
