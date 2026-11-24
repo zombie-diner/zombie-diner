@@ -64,6 +64,7 @@ public class ZombieAI : MonoBehaviour
 
         foreach (GameObject p in players)
         {
+            if (p.TryGetComponent<IDamageable>(out var damageable) && damageable.IsDead) continue;
             float d = FlatDistance(transform.position, p.transform.position);
             if (d < best)
             {
@@ -86,8 +87,8 @@ public class ZombieAI : MonoBehaviour
 
     void Attack()
     {
-        // TODO: replace with shared IDamageable/Health once weapons person sets it up
-        Debug.Log($"{name} attacks {target.name} for {attackDamage} damage");
+        if (target.TryGetComponent<IDamageable>(out var damageable))
+            damageable.TakeDamage(attackDamage, gameObject);
     }
 
     static float FlatDistance(Vector3 a, Vector3 b)
