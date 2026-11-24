@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private InputActionReference moveActionReference; //WASD or Arrow
 
     private Rigidbody playerRB;
-    private Vector2 moveInput;
+    public Vector2 MoveInput { get; private set; } // public get for aiming script
     private Vector3 currentVelocity;
 
     private void Awake()
@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 moveInput3d = new Vector3(moveInput.x, 0, moveInput.y); //converting Vector2 into Vector 3
-        Vector3 desiredVelocity = Vector3.ClampMagnitude(moveInput3d, 1f) * movSpeed; //The max speed normalized 
+        Vector3 moveInput3d = new Vector3(MoveInput.x, 0, MoveInput.y); //converting Vector2 into Vector 3
+        Vector3 desiredVelocity = Vector3.ClampMagnitude(moveInput3d, 1f) * movSpeed; //The max speed normalized
 
         //accelerate or deaccelerate from current velocity to desired velocity
         currentVelocity = Vector3.MoveTowards(currentVelocity, desiredVelocity, movAccel * Time.fixedDeltaTime);
@@ -44,12 +44,12 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnMovePerformed(InputAction.CallbackContext ctx)
     {
-        moveInput = ctx.ReadValue<Vector2>(); //get velocity vector
+        MoveInput = ctx.ReadValue<Vector2>(); //get velocity vector
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext ctx)
     {
-        moveInput = Vector2.zero; //when no movement is pressed zero the velocity
+        MoveInput = Vector2.zero; //when no movement is pressed zero the velocity
     }
 
 }
