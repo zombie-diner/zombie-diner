@@ -1848,6 +1848,7 @@ GameObject:
   - component: {fileID: 1474443171}
   - component: {fileID: 1474443170}
   - component: {fileID: 1474443173}
+  - component: {fileID: 1474443174}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Player
@@ -2021,6 +2022,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   gameManager: {fileID: 323230619}
+--- !u!114 &1474443174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474443164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d5761ec82175d4a96e620bd16d0265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
+  attackActionReference: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  damage: 25
+  range: 15
+  timeBetweenShots: 0.25
+  shotRadius: 0.1
+  tracerTime: 0.05
 --- !u!1 &1652293326
 GameObject:
   m_ObjectHideFlags: 0
