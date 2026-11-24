@@ -72,6 +72,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void StopWave()
     {
+        CancelInvoke(nameof(StartNextWave));
         if (spawnRoutine != null) StopCoroutine(spawnRoutine);
         spawnQueue.Clear();
         WaveActive = false;
@@ -147,6 +148,7 @@ public class WaveSpawner : MonoBehaviour
         if (!WaveActive || spawnQueue.Count > 0 || alive.Count > 0) return;
 
         WaveActive = false;
+        if (spawnRoutine != null) { StopCoroutine(spawnRoutine); spawnRoutine = null; }
         Debug.Log($"Wave {CurrentWave} cleared!");
         OnWaveCleared?.Invoke(CurrentWave);
 
